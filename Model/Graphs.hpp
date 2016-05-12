@@ -10,8 +10,8 @@
 #define Graphs_hpp
 
 #include <set>
-namespace std
-{
+using namespace std;
+
     template<class Type>
     class Graph
     {

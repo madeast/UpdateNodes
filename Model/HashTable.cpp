@@ -17,12 +17,14 @@ HashTable<Type> :: HashTable()
     this->efficincyPercentage = .677;
     this->size = 0;
     this->internalStorage = new Type[capacity];
+    this->tableStorage = new CtecList<HashNode<Type>>[capacity];
 }
 
 template <class Type>
 HashTable<Type> :: ~HashTable<Type>()
 {
     delete [] internalStorage;
+    delete [] tableStorage;
 }
 
 template <class Type>
@@ -32,13 +34,35 @@ int HashTable<Type> :: getSize()
 }
 
 template <class Type>
+void HashTable<Type> :: addToTable(HashNode<Type> currentNode)
+{
+    if(this->size/this->tableCapacity >= this->efficiencyPercentage)
+    {
+        updateTableCapacity();
+    }
+    //Find where to put the value
+    int positionToInsert = findPosition(currentNode);
+    //If the spot is empty, make a new list and add the node
+    if(tableStorage[positionToInsert] == nullptr)
+    {
+        CtecList<HashNode<Type>> hashList;
+        tableStorage[positionToInsert] = hashList;
+        hashList.addEnd(currentNode);
+    }
+    else // add the node
+    {
+        tableStorage[positionToInsert].addEnd(currentNode);
+    }
+}
+
+template <class Type>
 void HashTable<Type> :: add(HashNode<Type> currentNode)
 {
     if (!contains(currentNode))
     {
         if(this->size/this->ccity >= this->efficiencyPercentage)
         {
-            updateSize();
+            updateCapacity();
         }
         
         int positionToInsert = findPosition(currentNode);
@@ -47,13 +71,11 @@ void HashTable<Type> :: add(HashNode<Type> currentNode)
         {
             while(internalStorage[positionToInsert] != nullptr)
             {
-                positionToInsert = (positionToInsert + 1) % capacity;
+                positionToInsert = handleCollision(currentNode);
             }
-            internalStorage[positionToInsert] = currentNode;
         }
-        else{
-            internalStorage[positionToInsert] = currentNode;
-        }
+        
+        internalStorage[positionToInsert] = currentNode;
     }
 }
 
@@ -69,6 +91,14 @@ int HashTable<Type> :: findPosition(HashNode<Type> currentNode)
     
     position = currentNode.getKEy() % capacity;
     return position;
+}
+
+template <class Type>
+int HashTable<Type> :: findTablePosition(HashNode<Type> currentNode)
+{
+    int position = 0;
+    
+    position = currentNode.getKey() % tableCapacity;
 }
 
 template <class Type>
@@ -114,7 +144,7 @@ bool HashTable<Type> :: isPrime(int canidateNumber)
 }
 
 template <class Type>
-void HashTable<Type> :: updateSize()
+void HashTable<Type> :: updateCapacity()
 {
     int updatedCapacity = getNextPrime();
     HashNode<Type> * updatedStorage = new HashNode<Type> [updatedCapacity];
@@ -134,24 +164,77 @@ void HashTable<Type> :: updateSize()
     internalStorage = updatedStorage;
 }
 
+template <class Type>
+void HashTable<Type> :: updateTableCapacity()
+{
+    int updatedCapacity = getNextPrime();
+    CtecList<HashNode<Type>> * updateTable = new CtecList<HashNode<Type>>[updatedCapacity];
+    int oldTableCapacity = tableCapacity;
+    tableCapacity = updatedCapacity;
+    
+    for(int index = 0; index < oldTableCapacity; index++)
+    {
+        if(tableStorage[index] != nullptr)
+        {
+            CtecList<HashNode<Type>> temp = tableStorage[index];
+            for(int innerIndex = 0; innerIndex < tableStorage[index].getSize(); innerIndex++)
+            {
+                int updatedTablePosition = findPosition(temp.get(index));
+                if(updateTable[updatedTablePosition] == nullptr)
+                {
+                    CtecList<HashNode<Type>> updatedList;
+                    updatedList.addEnd(temp.get(index));
+                }
+                else
+                {
+                    updateTable[updatedTablePosition].addEnd(temp.get(index));
+                }
+            }
+        }
+    }
+}
 
 template <class Type>
 bool HashTable<Type> :: contains(HashNode<Type> currentNode)
 {
-    bool isInTable = false;
-    
-    int index = findPosition(currentNode);
-    while(internalStorage[index] != nullptr && isInTable)
+    bool wasRemoved = false;
+    if(contains(currentNode))
     {
-        if(internalStorage[index].getValue() == currentNode.getValue())
+        int index = findPosition(currentNode);
+        while(internalStorage[index] != nullptr && !wasRemoved)
         {
-            isInTable = true;
-        }
-        else
-        {
-            index = (index + 1) % capacity;
+            if(internalStorage[index].getValue() == currentNode.getValue())
+            {
+                wasRemoved = true;
+                internalStorage[index] = nullptr;
+                size--;
+            }
+            else
+            {
+                index = (index + 1) % capacity;
+            }
         }
     }
     
-    return isInTable;
+    return wasRemoved;
+}
+
+template <class Type>
+bool HashTable<Type> :: remove(HashNode<Type> currentNode)
+{
+    int index = findPosition(currentNode);
+    if(contains(currentNode))
+    {
+        int index = findPosition(currentNode);
+    }
+}
+
+template <class Type>
+int HashTable<Type> :: handleCollision(HashNode<Type> currentNode)
+{
+    int reHashedPosition = findPosition(currentNode);
+    int random = rand();
+    reHashedPosition = random + (reHashedPosition * reHashedPosition) % capacity;
+    
+    return reHashedPosition;
 }

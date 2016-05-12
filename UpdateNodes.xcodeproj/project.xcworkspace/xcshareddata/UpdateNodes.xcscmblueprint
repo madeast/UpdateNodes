@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "461CB935652199DE20AA9ED4F781C6FC860C4AD2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5C2212C4E8B3FEFFCDE0589D333BA9FB6D5C4EFB" : 0,
+    "461CB935652199DE20AA9ED4F781C6FC860C4AD2" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "789A8B6D-124C-45EE-BDA5-A8790A6B66F5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5C2212C4E8B3FEFFCDE0589D333BA9FB6D5C4EFB" : "",
+    "461CB935652199DE20AA9ED4F781C6FC860C4AD2" : "UpdateNodes\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "UpdateNodes",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "UpdateNodes.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/madeast\/UpdateNodes.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "461CB935652199DE20AA9ED4F781C6FC860C4AD2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/madeast\/",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5C2212C4E8B3FEFFCDE0589D333BA9FB6D5C4EFB"
+    }
+  ]
+}

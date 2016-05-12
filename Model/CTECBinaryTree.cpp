@@ -7,6 +7,7 @@
 //
 
 #include "CTECBinaryTree.h"
+
 using namespace std;
 
 template<class Type>
@@ -121,7 +122,7 @@ void CTECBinaryTree<Type> :: calculateSize(TreeNode<Type> * currentNode)
 }
 
 template<class Type>
-TreeNode<Type> * CTECBinaryTree<Type> :: getRightMostChild(CTECBinaryTree<Type> * leftSubTree)
+TreeNode<Type> * CTECBinaryTree<Type> :: getRightMostChild(TreeNode<Type> * leftSubTree)
 {
     TreeNode<Type> * rightNode = leftSubTree->getRoot();
     while(rightNode->getRightChild() !=nullptr)
@@ -133,7 +134,7 @@ TreeNode<Type> * CTECBinaryTree<Type> :: getRightMostChild(CTECBinaryTree<Type> 
 }
 
 template<class Type>
-TreeNode<Type> * CTECBinaryTree<Type> :: getLeftMostChild(CTECBinaryTree<Type> * rightSubTree)
+TreeNode<Type> * CTECBinaryTree<Type> :: getLeftMostChild(TreeNode<Type> * rightSubTree)
 {
     TreeNode<Type> * leftNode = rightSubTree->getRoot();
     while(leftNode->getLeftChild() != nullptr)
@@ -145,7 +146,7 @@ TreeNode<Type> * CTECBinaryTree<Type> :: getLeftMostChild(CTECBinaryTree<Type> *
 }
 
 template<class Type>
-bool CTECBinaryTree<Type> :: contains(Type value, CTECBinaryTree<Type> * currentTree)
+bool CTECBinaryTree<Type> :: contains(Type value, TreeNode<Type> * currentTree)
 {
     /*
      Is  value in root? - return true else
@@ -156,13 +157,18 @@ bool CTECBinaryTree<Type> :: contains(Type value, CTECBinaryTree<Type> * current
     {
         return false;
     }
-    else if(currentTree->getRoot()->getValue() == value)
+    
+    if(currentTree->getValue() == value)
     {
-        return contains(value, currentTree->getRoot()->getLeftChild());
+        return true;
+    }
+    else if(value < currentTree->getValue())
+    {
+        return contains(value, currentTree->getLeftChild());
     }
     else
     {
-        return contains(value, currentTree->getRoot()->getRightChild());
+        return contains(value, currentTree->getRightChild());
     }
     return false;
 }
@@ -241,13 +247,13 @@ void CTECBinaryTree<Type> :: remove(TreeNode<Type> * nodeToRemove)
     {
         cerr << "No! You can't remove nothing!!" <<endl;
     }
-    else if(nodeToRemove->getRightChild == nullptr && nodeToRemove->getLeftChild() == nullptr)
+    else if(nodeToRemove->getRightChild() == nullptr && nodeToRemove->getLeftChild() == nullptr)
     {
         temp = nodeToRemove;
         nodeToRemove = nullptr;
         delete temp;
     }
-    else if(nodeToRemove->getRightChild == nullptr)
+    else if(nodeToRemove->getRightChild() == nullptr)
     {
         temp = nodeToRemove;
         nodeToRemove = temp->getLeftChild();
@@ -264,7 +270,7 @@ void CTECBinaryTree<Type> :: remove(TreeNode<Type> * nodeToRemove)
         current = nodeToRemove->getLeftChild();
         trailing = nullptr;
         
-        while(current->getRightChild != nullptr)
+        while(current->getRightChild() != nullptr)
         {
             trailing = current;
             current = current->getRightChild();
@@ -278,7 +284,7 @@ void CTECBinaryTree<Type> :: remove(TreeNode<Type> * nodeToRemove)
         }
         else
         {
-            trailing->setRightChild->setRightChild(current->getLeftChild());
+            trailing->setRightChild(current->getLeftChild());
         }
         
         delete current;
@@ -289,4 +295,13 @@ template<class Type>
 TreeNode<Type> * CTECBinaryTree<Type> :: getRoot()
 {
     return root;
+}
+
+template<class Type>
+CTECBinaryTree<Type> :: ~CTECBinaryTree<Type>()
+{
+    while(root != nullptr)
+    {
+        remove(root);
+    }
 }
