@@ -60,7 +60,7 @@ void HashTable<Type> :: add(HashNode<Type> currentNode)
 {
     if (!contains(currentNode))
     {
-        if(this->size/this->ccity >= this->efficiencyPercentage)
+        if(this->size/this->city >= this->efficiencyPercentage)
         {
             updateCapacity();
         }
