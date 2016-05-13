@@ -20,6 +20,7 @@
 #include "../Model/Timer.h"
 #include "../Model/CtecList.cpp"
 #include "../Model/Graphs.cpp"
+#include "../Model/HashTable.cpp"
 using namespace std;
 
 class NodeController
@@ -40,6 +41,7 @@ private:
     void tryTree();
     void doQuick();
     void tryGraphs();
+    void testHashTable();
 public:
 	NodeController();
 	virtual ~NodeController();

@@ -14,10 +14,10 @@ template <class Type>
 HashTable<Type> :: HashTable()
 {
     this->capacity = 101;
-    this->efficincyPercentage = .677;
+    this->efficiencyPercentage = .677;
     this->size = 0;
-    this->internalStorage = new Type[capacity];
-    this->tableStorage = new CtecList<HashNode<Type>>[capacity];
+    this->internalStorage = new HashNode<Type>*[capacity];
+    this->tableStorage = new CtecList<HashNode<Type>> [capacity];
 }
 
 template <class Type>
@@ -60,7 +60,7 @@ void HashTable<Type> :: add(HashNode<Type> currentNode)
 {
     if (!contains(currentNode))
     {
-        if(this->size/this->city >= this->efficiencyPercentage)
+        if(size/capacity >= this->efficiencyPercentage)
         {
             updateCapacity();
         }
@@ -75,7 +75,8 @@ void HashTable<Type> :: add(HashNode<Type> currentNode)
             }
         }
         
-        internalStorage[positionToInsert] = currentNode;
+        internalStorage[positionToInsert] = &currentNode;
+        size++;
     }
 }
 
@@ -89,7 +90,7 @@ int HashTable<Type> :: findPosition(HashNode<Type> currentNode)
     //We are going "hash" the key of the HashNode to find its value.
     int position = 0;
     
-    position = currentNode.getKEy() % capacity;
+    position = currentNode.getKey() % capacity;
     return position;
 }
 
@@ -141,6 +142,7 @@ bool HashTable<Type> :: isPrime(int canidateNumber)
             }
         }
     }
+    return isPrime;
 }
 
 template <class Type>
@@ -152,16 +154,18 @@ void HashTable<Type> :: updateCapacity()
     int oldCapacity = capacity;
     capacity = updatedCapacity;
     
+    HashNode<Type> ** largerStorage = new HashNode<Type>*[capacity];
+    
     for(int index = 0; index < oldCapacity; index++)
     {
         if(internalStorage[index] != nullptr)
         {
-            int updatedPosition = findPosition(internalStorage[index]);
-            updatedStorage[updatedPosition] = internalStorage[index];
+            int updatedPosition = findPosition(*internalStorage[index]);
+            largerStorage[updatedPosition] = internalStorage[index];
         }
     }
     
-    internalStorage = updatedStorage;
+    internalStorage = largerStorage;
 }
 
 template <class Type>
@@ -203,7 +207,7 @@ bool HashTable<Type> :: contains(HashNode<Type> currentNode)
         int index = findPosition(currentNode);
         while(internalStorage[index] != nullptr && !wasRemoved)
         {
-            if(internalStorage[index].getValue() == currentNode.getValue())
+            if(internalStorage[index]->getValue() == currentNode.getValue())
             {
                 wasRemoved = true;
                 internalStorage[index] = nullptr;

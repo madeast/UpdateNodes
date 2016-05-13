@@ -209,6 +209,29 @@ void NodeController::tryGraphs()
     
 }
 
+void NodeController::testHashTable()
+{
+    HashTable<int> tempTable;
+    HashNode<int> tempArray[10];
+    for(int spot = 0; spot < 10; spot++)
+    {
+        int randomValue = rand();
+        int randomKey = rand();
+        HashNode<int> temp = HashNode<int>(randomKey, randomValue);
+        tempTable.add(temp);
+        tempArray[spot] = temp;
+    }
+    bool test = tempTable.contains(tempArray[0]);
+    string result;
+    if(test)
+    {
+        result = "it's there";
+    }
+    else
+    {
+        result = "it's not there";
+    }
+}
 
 
 

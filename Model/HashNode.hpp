@@ -17,8 +17,9 @@ private:
     int key;
     Type value;
 public:
+    HashNode();
     HashNode(int key, const Type& value);
-    void setKe(int key);
+    void setKey(int key);
     void setValue(const Type& value);
     int getKey();
     Type getValue();

@@ -8,7 +8,7 @@
 
 #ifndef HashTable_hpp
 #define HashTable_hpp
-#include "CTECList.cpp"
+#include "CtecList.h"
 #include "HashNode.cpp"
 template <class Type>
 class HashTable
@@ -18,7 +18,7 @@ private:
     int tableCapacity;
     double efficiencyPercentage;
     int size;
-    Type * internalStorage;
+    HashNode<Type> ** internalStorage;
     CtecList<HashNode<Type>> * tableStorage;
     
     int findPosition(HashNode<Type> currentNode); 
