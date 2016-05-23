@@ -33,6 +33,7 @@ void NodeController :: start()
 {
     tryTree();
     testHashTable();
+    testsLists();
 }
 
 void NodeController::checkSorts()
