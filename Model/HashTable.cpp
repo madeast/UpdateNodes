@@ -202,8 +202,7 @@ template <class Type>
 bool HashTable<Type> :: contains(HashNode<Type> currentNode)
 {
     bool wasRemoved = false;
-    if(contains(currentNode))
-    {
+  
         int index = findPosition(currentNode);
         while(internalStorage[index] != nullptr && !wasRemoved)
         {
@@ -218,7 +217,6 @@ bool HashTable<Type> :: contains(HashNode<Type> currentNode)
                 index = (index + 1) % capacity;
             }
         }
-    }
     
     return wasRemoved;
 }

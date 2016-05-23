@@ -32,6 +32,7 @@ void NodeController :: testsLists()
 void NodeController :: start()
 {
     tryTree();
+    testHashTable();
 }
 
 void NodeController::checkSorts()
@@ -154,6 +155,7 @@ void NodeController :: tryTree()
     testTree.insert(7);
     testTree.insert(10);
     testTree.insert(-5);
+    
 }
 
 int NodeController::partition(int first, int last)
@@ -231,6 +233,7 @@ void NodeController::testHashTable()
     {
         result = "it's not there";
     }
+    cout << result << endl;
 }
 
 
