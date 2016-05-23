@@ -34,6 +34,7 @@ void NodeController :: start()
     tryTree();
     testHashTable();
     testsLists();
+    tryGraphs();
 }
 
 void NodeController::checkSorts()
