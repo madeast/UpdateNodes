@@ -32,6 +32,8 @@ CtecList<Type>::~CtecList()
 		delete temp;
 	}
 
+if(current != nullptr)
+{
 	while(current->getNext() != nullptr)
 	{
 		ArrayNode<Type> * temp = current;
@@ -45,6 +47,7 @@ CtecList<Type>::~CtecList()
 	head = nullptr;
 	end = nullptr;
 	size = 0;
+}
 }
 
 template <class Type>
@@ -186,7 +189,10 @@ void CtecList<Type> :: addToFront(const Type& value)
 {
 	ArrayNode<Type> * newStuff = new ArrayNode<Type>(value, head);
 	head = newStuff;
-
+if(end == nullptr)
+{
+    end = head;
+}
 	calculateSize();
 }
 
